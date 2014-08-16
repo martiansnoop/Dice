@@ -1,0 +1,19 @@
+{
+  "name": "dice",
+  "version": "0.0.0",
+  "homepage": "https://github.com/martiansnoop",
+  "authors": [
+    "Emily Wenberg <martiansnoop@gmail.com>"
+  ],
+  "description": "A simple dice-rolling library",
+  "main": "dice.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
