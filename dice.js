@@ -2,7 +2,7 @@
 
 //TODO: make these not in the global namespace
 function Dice(dieMaker) {
-    function fetchDice(sides, count) {
+    function fetch(sides, count) {
         var range = _.isFinite(count) ? _.range(count) : [1];
         return _.map(range, function(c) {
             return dieMaker(sides);
@@ -33,7 +33,7 @@ function Dice(dieMaker) {
     }
 
     return {
-        fetchDice: fetchDice,
+        fetch: fetch,
         roll: roll
     }
 }
@@ -58,8 +58,8 @@ results format:
 
 var dice = new Dice(ordinaryDie);
 
-var oneD6 = dice.fetchDice(6);
-var twoD8 = dice.fetchDice(8, 2);
+var oneD6 = dice.fetch(6);
+var twoD8 = dice.fetch(8, 2);
 
 var results = dice.roll(oneD6, twoD8);
 console.log(results.rolls);
