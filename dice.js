@@ -9,6 +9,10 @@ function Dice(dieMaker) {
     }
 
     function roll() {
+        function sum(a, b) {
+            return a + b;
+        }
+
         var rollsWithDice =  _.map(_.flatten(arguments), function(die) {
             return [die, die.roll()];
         });
@@ -22,10 +26,6 @@ function Dice(dieMaker) {
             rolls: rolls,
             sum: _.foldl(rolls, sum, 0)
         }
-    }
-
-    function sum(a, b) {
-        return a + b;
     }
 
     return {
