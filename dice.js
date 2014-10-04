@@ -2,9 +2,8 @@
 
 //TODO: make these not in the global namespace
 function Dice(dieMaker) {
-    function fetch(sides, count) {
-        var range = _.isFinite(count) ? _.range(count) : [1];
-        return _.map(range, function(c) {
+    function fetch(sides) {
+        return _.map(arguments, function(sides) {
             return dieMaker(sides);
         });
     }
@@ -59,9 +58,10 @@ results format:
 var dice = new Dice(ordinaryDie);
 
 var oneD6 = dice.fetch(6);
-var twoD8 = dice.fetch(8, 2);
+var twoD8 = dice.fetch(8, 8);
+var sneakAttackDagger = dice.fetch(4,6,6,6);
 
-var results = dice.roll(oneD6, twoD8);
+var results = dice.roll(sneakAttackDagger);
 console.log(results.rolls);
 console.log(results.rollsWithDice);
 console.log(results.sum);
