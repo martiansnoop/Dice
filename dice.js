@@ -20,15 +20,12 @@ function Dice(dieMaker) {
         return {
             rollsWithDice: rollsWithDice,
             rolls: rolls,
-            sum: sum(rolls)
+            sum: _.foldl(rolls, sum, 0)
         }
     }
 
-    function sum(results) {
-        function sum(memo, result) {
-            return result + memo;
-        }
-        return _.reduce(results, sum, 0);
+    function sum(a, b) {
+        return a + b;
     }
 
     return {
