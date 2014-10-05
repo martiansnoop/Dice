@@ -1,9 +1,10 @@
 "use strict";
 
 //TODO: make these not in the global namespace
-function Dice(dieMaker) {
-    function fetch(sides) {
-        return _.map(arguments, function(sides) {
+function Dice() {
+    function fetch(dieMaker) {
+        var sides = _.tail(arguments);
+        return _.map(sides, function(sides) {
             return dieMaker(sides);
         });
     }
@@ -28,20 +29,32 @@ function Dice(dieMaker) {
         }
     }
 
+    function fairDie(sides) {
+        return {
+            roll: function() {
+                return _.random(1, sides);
+            },
+            sides: sides
+        }
+    }
+
+    function loadedDie(sides) {
+        return {
+            roll: _.constant(sides),
+            sides: sides
+        }
+    }
+
     return {
-        fetch: fetch,
+        factories: {
+            fair: _.bind(fetch, null, fairDie),
+            loaded: _.bind(fetch, null, loadedDie)
+        },
         roll: roll
     }
 }
 
-function ordinaryDie(sides) {
-    return {
-        roll: function() {
-            return _.random(1, sides);
-        },
-        sides: _.constant(sides)
-    }
-}
+
 
 /*
 results format:
@@ -52,11 +65,13 @@ results format:
 }
 */
 
-var dice = new Dice(ordinaryDie);
+var dice = Dice();
 
-var oneD6 = dice.fetch(6);
-var twoD8 = dice.fetch(8, 8);
-var sneakAttackDagger = dice.fetch(4,6,6,6);
+var makeDice = dice.factories.fair;
+
+var oneD6 = makeDice(6);
+var twoD8 = makeDice(8, 8);
+var sneakAttackDagger = makeDice(4,6,6,6);
 
 var results = dice.roll(sneakAttackDagger);
 console.log(results.rolls);
