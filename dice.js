@@ -2,14 +2,25 @@
 
 //TODO: make these not in the global namespace
 function Dice() {
-    function fetch(dieMaker) {
-        var sides = _.tail(arguments);
-        return _.map(sides, function(sides) {
+    /**
+     *
+     * @param {Function} dieMaker -
+     * @param {...number} sides - highest side of dice being created.
+     * @returns {Array}
+     */
+    function fetch(dieMaker, sides) {
+        var sidesArray = _.tail(arguments);
+        return _.map(sidesArray, function(sides) {
             return dieMaker(sides);
         });
     }
 
-    function roll() {
+    /**
+     *
+     * @param {...Object} dice - any number of dice or arrays of dice to roll
+     * @returns {{rollsWithDice: *, rolls: *, sum: *}}
+     */
+    function roll(dice) {
         function sum(a, b) {
             return a + b;
         }
@@ -29,6 +40,13 @@ function Dice() {
         }
     }
 
+    /**
+     * Returns a die that, when rolled, yields a random result
+     * between 1 and the max side count, inclusive
+     *
+     * @param sides
+     * @returns {{roll: Function, sides: number}}
+     */
     function fairDie(sides) {
         return {
             roll: function() {
@@ -38,6 +56,12 @@ function Dice() {
         }
     }
 
+    /**
+     * Returns a die that will always roll the highest number.
+     *
+     * @param sides
+     * @returns {{roll: Function, sides: number}}
+     */
     function loadedDie(sides) {
         return {
             roll: _.constant(sides),
